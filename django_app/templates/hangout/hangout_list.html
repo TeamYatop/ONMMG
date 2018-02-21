@@ -1,0 +1,9 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+
+    {% for hangout in hangouts %}
+        {{ hangout }}
+    {% endfor %}
+
+{% endblock %}

@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from hangout.models import Hangout
+
+admin.site.register(Hangout)
