@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 
 
 class Tag(models.Model):
@@ -11,9 +11,9 @@ class Tag(models.Model):
 class Hangout(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
-    latitude = models.DecimalField(max_digits=9, decimal_places=6)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6)
-    tags = models.ManyToManyField(Tag, related_name='hangouts')
+    latitude = models.DecimalField(max_digits=20, decimal_places=15)
+    longitude = models.DecimalField(max_digits=20, decimal_places=15)
+    tags = models.ManyToManyField(Tag, related_name='hangouts', blank=True)
 
     def __str__(self):
         return 'Hangout({})'.format(self.title)

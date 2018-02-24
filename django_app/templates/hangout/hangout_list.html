@@ -1,9 +1,38 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
+<div id="map" style="witdth:100%;height:350px;"></div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey="></script>
+<script>
+        var mapContainer = document.getElementById('map'),
+            mapOption = {
+                center: new daum.maps.LatLng(37.41132,127.12866099999997),
+                level: 4
+               };
+        var map = new daum.maps.Map(mapContainer, mapOption);
 
-    {% for hangout in hangouts %}
-        {{ hangout }}
+        {% for hangout in object_list %}
+            var markerPosition  = new daum.maps.LatLng({{ hangout.latitude }}, {{ hangout.longitude }});
+            var marker = new daum.maps.Marker({
+                position: markerPosition
+            });
+            marker.setMap(map);
+        {% endfor %}
+
+</script>
+
+<div>
+    {% for hangout in object_list %}
+    <li>
+        {{ hangout.title }}
+        {{ hangout.description }}
+        {% for tag in hangout.tags.all %}
+        #{{tag.word}}
+        {% endfor %}
+    </li>
     {% endfor %}
+</div>
+{% block script %}
 
+{% endblock%}
 {% endblock %}
