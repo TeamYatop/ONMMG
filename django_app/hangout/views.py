@@ -4,7 +4,6 @@ from hangout.models import Hangout
 
 
 class HangoutListView(generic.ListView):
-    # model = Hangout
     template_name = 'hangout/hangout_list.html'
 
     def get_queryset(self):
