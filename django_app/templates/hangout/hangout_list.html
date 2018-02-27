@@ -2,34 +2,67 @@
 
 {% block content %}
 <div id="map" style="witdth:100%;height:350px;"></div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d6c98772c22da8e2f99772ad89a32b40"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey="></script>
 <script>
         var mapContainer = document.getElementById('map'),
             mapOption = {
-                center: new daum.maps.LatLng(37.41132,127.12866099999997),
-                level: 4
+                center: new daum.maps.LatLng(37.41132, 127.12866099999997),
+                level: 5
                };
         var map = new daum.maps.Map(mapContainer, mapOption);
 
+        var positions = []
+
         {% for hangout in object_list %}
-            var markerPosition  = new daum.maps.LatLng({{ hangout.latitude }}, {{ hangout.longitude }});
-            var marker = new daum.maps.Marker({
-                position: markerPosition
-            });
-            marker.setMap(map);
+            var pos = {
+                content: '<div style="padding:5px;">{{ hangout.title }}</div>',
+                latlng:new daum.maps.LatLng({{ hangout.latitude }}, {{ hangout.longitude }})
+            }
+            positions.push(pos)
+
         {% endfor %}
+
+        for (var i = 0; i < positions.length; i ++) {
+            // 마커를 생성합니다
+            var marker = new daum.maps.Marker({
+                map: map, // 마커를 표시할 지도
+                position: positions[i].latlng // 마커의 위치
+            });
+
+            // 마커에 표시할 인포윈도우를 생성합니다
+            var infowindow = new daum.maps.InfoWindow({
+                content: positions[i].content // 인포윈도우에 표시할 내용
+            });
+
+            // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+            // 이벤트 리스너로는 클로저를 만들어 등록합니다
+            // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+            daum.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+            daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+        }
+
+        // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+        function makeOverListener(map, marker, infowindow) {
+            return function() {
+                infowindow.open(map, marker);
+            };
+        }
+
+        // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+        function makeOutListener(infowindow) {
+            return function() {
+                infowindow.close();
+            };
+        }
+
 
 </script>
 
 <div>
     {% for hangout in object_list %}
-    <li>
+    <hr>
         {{ hangout.title }}
         {{ hangout.description }}
-        <!--{% for tag in hangout.tags.all %}-->
-        <!--#{{tag.word}}-->
-        <!--{% endfor %}-->
-    </li>
     {% endfor %}
 </div>
 {% block script %}
