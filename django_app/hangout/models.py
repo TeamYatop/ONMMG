@@ -26,9 +26,23 @@ class Hangout(models.Model):
         if not tags:
             return
 
-        for t in tags:
+        # todo : need clean up & code efficenty required
+        # 디스크립션 내에서 태그의 변화를 인식하여 저장
+        tags_a = set(t.word for t in self.tags.all())
+        tags_b = set(tags)
+
+        tags_union = tags_a.intersection(tags_b)
+
+        added_tags = tags_b - tags_union
+        remove_tags = tags_a - tags_union
+
+        for t in added_tags:
             tag, tag_created = Tag.objects.get_or_create(word=t)
             self.tags.add(tag)
+
+        for t in remove_tags:
+            tag, tag_created = Tag.objects.get_or_create(word=t)
+            self.tags.remove(tag)
 
     def save(self, *args, **kwargs):
         super(Hangout, self).save(args, kwargs)
