@@ -2,7 +2,7 @@
 
 {% block content %}
 <div id="map" style="witdth:100%;height:350px;"></div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey="></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d6c98772c22da8e2f99772ad89a32b40"></script>
 <script>
         var mapContainer = document.getElementById('map'),
             mapOption = {
@@ -57,7 +57,12 @@
 
 
 </script>
-
+<div>
+    <form method="get">
+        <input type="text" name="tags">
+        <input type="submit" value="submit">
+    </form>
+</div>
 <div>
     {% for hangout in object_list %}
     <hr>
