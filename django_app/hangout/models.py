@@ -20,6 +20,9 @@ class Hangout(models.Model):
     def __str__(self):
         return 'Hangout({})'.format(self.title)
 
+    def clean(self):
+        pass
+
     def tag_save(self):
         tags = re.findall(r'#(\w+)\b', self.description)
 
@@ -45,6 +48,7 @@ class Hangout(models.Model):
             self.tags.remove(tag)
 
     def save(self, *args, **kwargs):
+        self.full_clean()
         super(Hangout, self).save(args, kwargs)
         self.tag_save()
         super(Hangout, self).save(args, kwargs)
