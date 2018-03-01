@@ -57,20 +57,32 @@
 
 
 </script>
+
 <div>
-    <form method="get">
-        <input type="text" name="tags">
-        <input type="submit" value="submit">
+    <form method="post" id="my-search-form" onsubmit="return OnSubmitForm();">
+        {% csrf_token %}
+
+        <input type="text" id="tags">
+        <input type="submit" value="검색">
     </form>
 </div>
 <div>
     {% for hangout in object_list %}
     <hr>
-        {{ hangout.title }}
-        {{ hangout.description }}
+    {{ hangout.title }}
+    {{ hangout.description }}
     {% endfor %}
 </div>
-{% block script %}
 
+{% block script %}
+<script type=text/javascript>
+    function OnSubmitForm() {
+        var tags = document.getElementById("tags").value;
+        var form = document.getElementById("my-search-form");
+        form.action = tags;
+        form.submit();
+        return true;
+    }
+</script>
 {% endblock%}
 {% endblock %}
