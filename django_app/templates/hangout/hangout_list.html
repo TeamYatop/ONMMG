@@ -79,10 +79,11 @@
     function OnSubmitForm() {
         var tags = document.getElementById("tags").value;
         var form = document.getElementById("my-search-form");
-        form.action = tags;
+        form.action = {% url 'default' %} + tags;
         form.submit();
         return true;
     }
 </script>
-{% endblock%}
+{% endblock %}
+
 {% endblock %}

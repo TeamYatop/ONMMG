@@ -1,4 +1,3 @@
-from django.shortcuts import get_object_or_404
 from django.views import generic
 
 from hangout.models import Hangout, Tag
@@ -9,6 +8,9 @@ class HangoutDefaultListView(generic.ListView):
 
     def get_queryset(self):
         return Hangout.objects.all()
+
+    def post(self, *args, **kwargs):
+        return self.get(args, kwargs)
 
 
 class HangoutListView(generic.ListView):
