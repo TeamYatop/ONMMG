@@ -3,12 +3,12 @@
 {% block content %}
 <div id="map" style="witdth:100%;height:350px;"></div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d6c98772c22da8e2f99772ad89a32b40"></script>
-<script>
+<script type=text/javascript>
     // 지도를 생성합니다
     var center_lat = 37.41132
     var center_lng = 127.12866099999997
 
-    var mapContainer = document.getElementById('map')
+    var mapContainer = document.getElementById('map');
     var mapOption = {
         center: new daum.maps.LatLng(center_lat, center_lng),
         level: 5
@@ -21,7 +21,7 @@
     {% for hangout in object_list %}
         var pos = {
             content: '<div style="padding:5px;">{{ hangout.title }}</div>',
-            latlng:new daum.maps.LatLng({{ hangout.latitude }}, {{ hangout.longitude }})
+            latlng: new daum.maps.LatLng({{ hangout.latitude }}, {{ hangout.longitude }})
         }
         positions.push(pos)
     {% endfor %}
@@ -59,6 +59,18 @@
         };
     }
 
+    function setCenter(i) {
+        var moveLatLon = positions[i].latlng
+        map.setCenter(moveLatLon);
+    };
+
+    function OnSubmitForm() {
+        var tags = document.getElementById("tags").value;
+        var form = document.getElementById("my-search-form");
+        form.action = {% url 'default' %} + tags;
+        form.submit();
+        return true;
+    }
 
 </script>
 
@@ -73,22 +85,13 @@
 
 <div>
     {% for hangout in object_list %}
-    <hr>
-    {{ hangout.title }}
-    {{ hangout.description }}
+        <hr>
+        <button onclick="setCenter('{{forloop.counter0}}')">가자</button>
+        {{ hangout.title }}
+        {{ hangout.description }}
+    {% empty %}
+        <p>검색 결과가 존재하지 않습니다</p>
     {% endfor %}
 </div>
-
-{% block script %}
-<script type=text/javascript>
-    function OnSubmitForm() {
-        var tags = document.getElementById("tags").value;
-        var form = document.getElementById("my-search-form");
-        form.action = {% url 'default' %} + tags;
-        form.submit();
-        return true;
-    }
-</script>
-{% endblock %}
 
 {% endblock %}
