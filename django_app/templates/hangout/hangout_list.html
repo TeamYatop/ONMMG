@@ -73,23 +73,16 @@
     }
 
 </script>
-<<<<<<< HEAD
 
 <div id="search-form">
-=======
-<div>
-    <form>
-        <input type="button" value="HOME" onclick="window.location.href='{% url 'default' %}'" />
-        <input type="button" value="RANDOM" onclick="window.location.href='{% url 'default' %}'" />
-    </form>
-</div>
-<div>
->>>>>>> 248729de5f97d973585beb6fb3ca4ec5e6bc3993
+
     <form method="post" id="my-search-form" onsubmit="return OnSubmitForm();">
         {% csrf_token %}
 
         <input type="text" id="tags">
         <input type="submit" id="search-button" value="검색">
+        <input type="button" value="HOME" onclick="window.location.href='{% url 'default' %}'" />
+        <input type="button" value="RANDOM" onclick="window.location.href='{% url 'default' %}'" />
     </form>
 </div>
 
