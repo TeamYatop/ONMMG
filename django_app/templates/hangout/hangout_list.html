@@ -73,7 +73,12 @@
     }
 
 </script>
-
+<div>
+    <form>
+        <input type="button" value="HOME" onclick="window.location.href='{% url 'default' %}'" />
+        <input type="button" value="RANDOM" onclick="window.location.href='{% url 'default' %}'" />
+    </form>
+</div>
 <div>
     <form method="post" id="my-search-form" onsubmit="return OnSubmitForm();">
         {% csrf_token %}
