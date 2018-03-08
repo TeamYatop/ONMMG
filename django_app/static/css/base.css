@@ -1,0 +1,68 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5rem;
+  color: #262626;
+}
+
+#search-form {
+  height: 40px;
+  width: 400px;
+  border: 1px solid #4058e0;
+  background: #ffffff;
+  margin: 0 auto;
+}
+
+#search-form #my-search-form {
+  height: 40px;
+  width: 400px;
+}
+
+#search-form #my-search-form #tags {
+  font-size: 16px;
+  width: 325px;
+  padding: 10px;
+  border: 0px;
+  outline: none;
+  float: left;
+}
+
+#search-form #my-search-form #search-button {
+  width: 50px;
+  height: 100%;
+  border: 0px;
+  background: #4058e0;
+  outline: none;
+  float: right;
+  color: #ffffff;
+}
+
+.hangout-list {
+  margin: 0 auto;
+  padding: 0px;
+}
+
+.hangout-list .hangout-list-wrap {
+  margin: 0 auto;
+  padding: 0px;
+}
+
+.hangout-list .hangout-list-wrap .hangout-list-nav {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0px;
+  max-width: 450px;
+  width: 100%;
+}
+
+.hangout-list .hangout-list-wrap .hangout-list-nav #go-center-button {
+  width: 50px;
+  height: 100%;
+  border: 0px;
+  background: #4058e0;
+  outline: none;
+  float: left;
+  color: #ffffff;
+}
+/*# sourceMappingURL=base.css.map */
