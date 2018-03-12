@@ -7,38 +7,43 @@ html, body {
 }
 
 #search-form {
+  display: flex;
+  justify-content: center;
+  width: 100%;
   height: 40px;
-  width: 400px;
-  border: 1px solid #4058e0;
-  background: #ffffff;
-  margin: 0 auto;
 }
 
-#search-form #my-search-form {
-  height: 40px;
-  width: 400px;
-}
-
-#search-form #my-search-form #tags {
-  font-size: 16px;
-  width: 325px;
-  padding: 10px;
-  border: 0px;
-  outline: none;
-  float: left;
-}
-
-#search-form #my-search-form #search-button {
-  width: 50px;
-  height: 100%;
+#search-form #home-button {
   border: 0px;
   background: #4058e0;
   outline: none;
-  float: right;
+  color: #ffffff;
+  height: 40px;
+}
+
+#search-form #my-search-form {
+  border: 0px;
+  background: #4058e0;
+  outline: none;
+  color: #ffffff;
+}
+
+#search-form #my-search-form #search-button {
+  border: 0px;
+  background: #4058e0;
+  outline: none;
+  color: #ffffff;
+}
+
+#search-form #random-button {
+  border: 0px;
+  background: #4058e0;
+  outline: none;
   color: #ffffff;
 }
 
 .hangout-list {
+  margin-top: 40px;
   margin: 0 auto;
   padding: 0px;
 }
@@ -58,7 +63,6 @@ html, body {
 
 .hangout-list .hangout-list-wrap .hangout-list-nav #go-center-button {
   width: 50px;
-  height: 100%;
   border: 0px;
   background: #4058e0;
   outline: none;

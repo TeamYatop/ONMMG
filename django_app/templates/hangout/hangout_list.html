@@ -75,15 +75,12 @@
 </script>
 
 <div id="search-form">
-
-    <form method="post" id="my-search-form" onsubmit="return OnSubmitForm();">
-        {% csrf_token %}
-
-        <input type="text" id="tags">
-        <input type="submit" id="search-button" value="검색">
-        <input type="button" value="HOME" onclick="window.location.href='{% url 'default' %}'" />
-        <input type="button" value="RANDOM" onclick="window.location.href='{% url 'default' %}'" />
+    <button id="home-button" onclick="window.location.href='{% url 'default' %}'" >HOME</button>
+    <form method="post" id="my-search-form" onsubmit="return OnSubmitForm();">{% csrf_token %}
+        <input type="text" id="tags-search">
+        <button type="submit" id="search-button" >검색</button>
     </form>
+    <button id="random-button" onclick="window.location.href='{% url 'default' %}'">RANDOM</button>
 </div>
 
 <div class="hangout-list">
