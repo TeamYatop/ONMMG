@@ -1,3 +1,4 @@
+from django.views import View
 from django.views.generic import ListView
 
 from hangout.models import Hangout, Tag
@@ -43,3 +44,8 @@ class HangoutListView(ListView):
 
     def post(self, *args, **kwargs):
         return self.get(args, kwargs)
+
+
+class HangoutSearchView(View):
+    def get(self, request):
+        pass
