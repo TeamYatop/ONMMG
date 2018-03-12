@@ -152,7 +152,7 @@
         var visibleKeys = keys.filter(function (key) {return hangoutContainer.get(key).isVisible;});
         var randomKey = visibleKeys[visibleKeys.length * Math.random() << 0];
         var hangout = hangoutContainer.setFocus(randomKey);
-        document.getElementById("debug-random-title").innerHTML = '랜덤선택: ' + hangout.data.title;
+        document.getElementById("list-empty-msg-tag").innerHTML = '랜덤선택: ' + hangout.data.title;
     }
 
     // 주어진 태그로 검색을 실시하고 목록을 업데이트한다
@@ -204,13 +204,13 @@
 
 </script>
 
-<div id="search-form">
-    <button id="home-button" onclick="searchTagAndUpdate();" >HOME</button>
-    <form method="post" id="my-search-form" onsubmit="return OnSubmitForm();">{% csrf_token %}
-        <input type="text" id="tags-search">
-        <button type="submit" id="search-button">검색</button>
+<div class="search-form">
+    <button class="home-button" onclick="searchTagAndUpdate();" >HOME</button>
+    <form method="post" class="my-search-form-tag" id="my-search-form">{% csrf_token %}
+        <input type="text" class="tag-search" id="tags-search">
+        <button type="submit" class="search-button">검색</button>
     </form>
-    <button id="random-button" onclick="selectRandomAndSetFocus();">RANDOM</button>
+    <button class="random-button" onclick="selectRandomAndSetFocus();">RANDOM</button>
 </div>
 
 <div class="hangout-list">

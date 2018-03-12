@@ -7,51 +7,60 @@ html, body {
   color: #262626;
 }
 
-#search-form {
+div.search-form {
     display: flex;
     justify-content: center;
+    position: relative;
     width: 100%;
     height: 40px;
+    margin-top: 5px;
+    
 
-    #home-button {
-        border: 0px;
+    .home-button {
         background: #4058e0;
         outline: none;
         color: #ffffff;
-        height: 40px;
-
-    }
-    #my-search-form {
-        color: #ffffff;
-        width: 400px;
-        height: 40px;
+        height: 100%;
+        border: 1px solid #4058e0;
+        border-radius: 3px;
         
-        #tags-search {
+    }
+    .my-search-form-tag {
+        background: #ffffff;
+        height: 100%;
+        margin: auto 7px;
+        border: 1px solid #4058e0;
+        outline: none;
+        border-radius: 3px;
+        
+        
+        .tag-search {
             background: #4058e0;
-            border: 1px solid #4058e0;
             background: #ffffff;
             font-size: 16px;
             width: 325px;
-            height: 100%;
-            padding: 10px;
-            border: 0px;
-            outline: none;
+            padding: 0 20px;
+            border: none;
+            border-radius: 3px;
         }
         
-        #search-button {
+        .search-button {
             width: 50px;
             height: 100%;
             border: 0px;
             background: #4058e0;
             outline: none;
-            color: #ffffff
+            color: #ffffff;
         }
     }
-    #random-button {
+    .random-button {
+        height: 100%;
         border: 0px;
         background: #4058e0;
         outline: none;
-        color: #ffffff
+        color: #ffffff;
+        border-radius: 3px;
+        
     }
 }
 
@@ -66,7 +75,6 @@ html, body {
             list-style: none;
             margin: 0 auto;
             padding: 0px;
-
             max-width: 450px;
             width: 100%;
             #go-center-button {
