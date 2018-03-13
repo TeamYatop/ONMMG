@@ -1,6 +1,11 @@
 import re
+import string
 
 from django.db import models
+from django.utils.crypto import get_random_string
+
+MAX_SLUG_LENGTH = 11
+SLUG_LETTERS = string.ascii_letters + string.digits
 
 
 class Tag(models.Model):
@@ -12,16 +17,15 @@ class Tag(models.Model):
 
 class Hangout(models.Model):
     title = models.CharField(max_length=100)
+    address = models.CharField(max_length=140)
     description = models.CharField(max_length=140)
     latitude = models.DecimalField(max_digits=20, decimal_places=15)
     longitude = models.DecimalField(max_digits=20, decimal_places=15)
     tags = models.ManyToManyField(Tag, related_name='hangouts', blank=True)
+    slug = models.SlugField(max_length=MAX_SLUG_LENGTH, unique=True, blank=False)
 
     def __str__(self):
         return 'Hangout({})'.format(self.title)
-
-    def clean(self):
-        pass
 
     def tag_save(self):
         tags = re.findall(r'#(\w+)\b', self.description)
@@ -47,8 +51,20 @@ class Hangout(models.Model):
             tag, tag_created = Tag.objects.get_or_create(word=t)
             self.tags.remove(tag)
 
+    @classmethod
+    def generate_unique_slug(cls):
+        slug = get_random_string(MAX_SLUG_LENGTH, SLUG_LETTERS)
+        if Hangout.objects.filter(slug=slug).exists():
+            return cls.generate_unique_slug()
+        else:
+            return slug
+
+    def slug_save(self):
+        if not self.slug:
+            self.slug = self.generate_unique_slug()
+
     def save(self, *args, **kwargs):
-        self.full_clean()
+        self.slug_save()
         super(Hangout, self).save(args, kwargs)
         self.tag_save()
         super(Hangout, self).save(args, kwargs)

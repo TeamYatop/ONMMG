@@ -15,4 +15,4 @@ class HangoutSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Hangout
-        fields = ('id', 'title', 'description', 'latitude', 'longitude', 'tags')
+        fields = ('slug', 'title', 'description', 'address', 'latitude', 'longitude', 'tags')

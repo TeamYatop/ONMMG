@@ -24,8 +24,10 @@ class HangoutAdmin(admin.ModelAdmin):
                 obj.latitude = result['documents'][0]['y']
                 obj.longitude = result['documents'][0]['x']
                 return super(HangoutAdmin, self).save_model(request, obj, form, change)
-
-        raise ValidationError('wrong result')
+            else:
+                raise ValidationError('address has multiple results {}'.format(result['meta']['total_count']))
+        else:
+            raise ValidationError('address conversion failed {}'.format(response.status_code))
 
 
 admin.site.register(Hangout, HangoutAdmin)

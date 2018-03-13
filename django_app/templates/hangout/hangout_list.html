@@ -27,11 +27,11 @@
         this.hangouts = {};
 
         this.register = function(data) {
-            pk = data.id;
-            // Hangout의 pk가 이미 등록되어 있는지 확인하고 없다면 새로 생성해서 등록한다.
-            if (!(pk in this.hangouts)) {
+            slug = data.slug;
+            // Hangout의 slug가 이미 등록되어 있는지 확인하고 없다면 새로 생성해서 등록한다.
+            if (!(slug in this.hangouts)) {
                 hangout = new Hangout(this.map, data);
-                this.hangouts[pk] = hangout;
+                this.hangouts[slug] = hangout;
 
                 // todo : 이벤트 등록을 여기서 해도 될지 고민할 필요가 있다.
                 // 지도에 이벤트 등록
@@ -44,7 +44,7 @@
                 // html 컨테이너에 태그 삽입
                 $("#dynamic-hangout-list-wrap").append(hangout.htmlTag);
             }
-            return this.hangouts[pk];
+            return this.hangouts[slug];
         }
 
         this.showAll = function() {
@@ -74,7 +74,7 @@
     function Hangout(_map, _hangout) {
         this.map = _map;
         this.data = _hangout;
-        this.pk = this.data.id;
+        this.slug = this.data.slug;
         this.latlng = new daum.maps.LatLng(this.data.latitude, this.data.longitude);
         this.marker = createMarker(this.map, this.latlng);
         this.infoWindow = createInfoWindow(this.data);
@@ -157,8 +157,16 @@
 
     // 주어진 태그로 검색을 실시하고 목록을 업데이트한다
     // 만약 태그가 주어지지 않는다면 디폴트 검색을 실시한다
-    function searchTagAndUpdate(tags='') {
-        var url = '{% url 'default' %}' + "api/" + tags;
+    function searchTagAndUpdate(tags='', area='') {
+        var url = '{% url 'search' %}';
+
+        if (area.length > 0) {
+            url += area + "/";
+        }
+
+        if (tags.length > 0) {
+            url += tags;
+        }
 
         $.getJSON(url, function(result, status){
             if (status == "success") {

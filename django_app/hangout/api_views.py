@@ -20,9 +20,9 @@ def hangout_list(request):
         return JsonResponse(serializer.errors, status=400)
 
 
-def hangout_detail(request, pk):
+def hangout_detail(request, slug):
     try:
-        hangout = Hangout.objects.get(pk=pk)
+        hangout = Hangout.objects.get(slug=slug)
     except Hangout.DoesNotExist:
         return HttpResponse(status=404)
 
@@ -43,7 +43,7 @@ def hangout_detail(request, pk):
         return HttpResponse(status=204)
 
 
-def hangout_search_list(request, words):
+def hangout_search_by_tags(request, words):
     words = words.split(',')
     tags = list()
     for w in words:
@@ -63,3 +63,7 @@ def hangout_search_list(request, words):
 
     serializer = HangoutSerializer(queryset, many=True)
     return JsonResponse(serializer.data, status=201, safe=False)
+
+
+def hangout_search_by_area_n_tags(request, area, words):
+    pass
