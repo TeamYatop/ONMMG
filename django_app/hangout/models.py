@@ -8,8 +8,19 @@ MAX_SLUG_LENGTH = 11
 SLUG_LETTERS = string.ascii_letters + string.digits
 
 
+class Area(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=140)
+    latitude = models.DecimalField(max_digits=20, decimal_places=15)
+    longitude = models.DecimalField(max_digits=20, decimal_places=15)
+
+    def __str__(self):
+        return 'Area({})'.format(self.name)
+
+
 class Tag(models.Model):
     word = models.CharField(max_length=50, unique=True)
+    area = models.ForeignKey(Area, related_name='tag_set', null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return '#{}'.format(self.word)
