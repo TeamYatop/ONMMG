@@ -16,10 +16,11 @@ class HangoutForm(forms.ModelForm):
 class AreaForm(forms.ModelForm):
     name = forms.CharField(required=True)
     address = forms.CharField(required=True)
+    tag_field = forms.CharField(required=True)
 
     class Meta:
         model = Area
-        fields = ['name', 'address']
+        fields = ['name', 'address', 'tag_field']
 
 
 class TagForm(forms.ModelForm):

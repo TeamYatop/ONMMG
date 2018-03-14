@@ -2,8 +2,8 @@ import requests
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 
-from hangout.form import HangoutForm, TagForm, AreaForm
-from hangout.models import Hangout, Tag, Area
+from hangout.form import HangoutForm, AreaForm, TagForm
+from hangout.models import Hangout, Area
 
 
 def request_address_2_coord_conversion(address):
@@ -53,5 +53,5 @@ class HangoutAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Area, AreaAdmin)
-admin.site.register(Tag, TagAdmin)
+# admin.site.register(Tag, TagAdmin)
 admin.site.register(Hangout, HangoutAdmin)
