@@ -23,11 +23,18 @@ div.search-form {
         height: 100%;
         border: 1px solid #4058e0;
         border-radius: 3px;
+
+        &:hover {
+            background-color: #3b8de0;
+            color: #eff156;
+            border: 1px solid #3b8de0;
+        }
         
     }
     .my-search-form-tag {
         background: #ffffff;
         height: 100%;
+        position: relative;
         margin: auto 7px;
         border: 1px solid #4058e0;
         outline: none;
@@ -37,7 +44,7 @@ div.search-form {
         .tag-search {
             background: #4058e0;
             background: #ffffff;
-            font-size: 16px;
+            font-size: 18px;
             width: 325px;
             padding: 0 20px;
             border: none;
@@ -51,40 +58,55 @@ div.search-form {
             background: #4058e0;
             outline: none;
             color: #ffffff;
+
+            &:hover {
+                background-color: #3b8de0;
+                color: #eff156;
+                border: 1px solid #3b8de0;
+            }
+    
         }
     }
     .random-button {
+        width: 80px;
         height: 100%;
         border: 0px;
         background: #4058e0;
         outline: none;
         color: #ffffff;
         border-radius: 3px;
+
+        &:hover {
+            background-color: #3b8de0;
+            color: #eff156;
+            border: 1px solid #3b8de0;
+        }
+
         
     }
 }
 
 .hangout-list {
-    margin-top: 40px;
-    margin: 0 auto;
-    padding: 0px;
+    height: 100%;
     .hangout-list-wrap {
-        margin: 0 auto;
-        padding: 0px;
+        margin-top: 10px;
         .hangout-list-nav {
+            margin-top: 10px;
+            margin-left: 180px;
+            margin-right: 180px;
+            padding: 5px;
             list-style: none;
-            margin: 0 auto;
-            padding: 0px;
-            max-width: 450px;
-            width: 100%;
-            #go-center-button {
-                width: 50px;
-                border: 0px;
-                background: #4058e0;
-                outline: none;
-                float: left;
-                color: #ffffff
-            }
+            text-align: center;
+            border-top: 1px solid black;
+            font-size: 18px;
+            // #go-center-button {
+            //     width: 50px;
+            //     border: 0px;
+            //     background: #4058e0;
+            //     outline: none;
+            //     float: left;
+            //     color: #ffffff
+            // }
         }
     }
 

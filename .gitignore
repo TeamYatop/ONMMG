@@ -4,6 +4,7 @@
 ### Custom ###
 .idea
 .conf-secret/
+.vscode
 
 ### Django ###
 *.log
