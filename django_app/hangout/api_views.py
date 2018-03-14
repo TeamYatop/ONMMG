@@ -1,7 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
 
-from hangout.models import Hangout, Tag
+from hangout.models import Hangout, Tag, Area
 from hangout.serializers import HangoutSerializer
 
 
@@ -66,4 +66,29 @@ def hangout_search_by_tags(request, words):
 
 
 def hangout_search_by_area_n_tags(request, area, words):
-    pass
+    try:
+        area = Area.objects.get(name=area)
+    except Area.DoesNotExist:
+        return Hangout.objects.none()
+    else:
+        area_tags = area.tag_set.all()
+
+    queryset = Hangout.objects.filter(tags__in=list(area_tags))
+
+    tags = list()
+    for word in words.split(','):
+        try:
+            tag = Tag.objects.get(word=word)
+        except Tag.DoesNotExist:
+            pass
+        else:
+            tags.append(tag)
+
+    if tags:
+        for tag in tags:
+            queryset = queryset.filter(tags__in=[tag])
+    else:
+        queryset = Hangout.objects.none()
+
+    serializer = HangoutSerializer(queryset, many=True)
+    return JsonResponse(serializer.data, status=201, safe=False)

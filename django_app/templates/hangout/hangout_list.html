@@ -200,13 +200,14 @@
             e.preventDefault();
 
             var tags = document.getElementById("tags-search").value;
+            var area = document.getElementById("area-search").value;
 
             if (tags.length <= 0) {
                 alert('search query is empty!!!');
                 return false;
             }
 
-            searchTagAndUpdate(tags);
+            searchTagAndUpdate(tags, area);
         });
     });
 
@@ -215,6 +216,12 @@
 <div class="search-form">
     <button class="home-button" onclick="searchTagAndUpdate();" >HOME</button>
     <form method="post" class="my-search-form-tag" id="my-search-form">{% csrf_token %}
+        <select id="area-search">
+            <option value="">---------</option>
+            {% for area in area_list %}
+            <option value="{{ area.name }}">{{ area.name }}</option>
+            {% endfor %}
+        </select>
         <input type="text" class="tag-search" id="tags-search">
         <button type="submit" class="search-button">검색</button>
     </form>
