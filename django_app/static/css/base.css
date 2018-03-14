@@ -24,9 +24,16 @@ div.search-form .home-button {
   border-radius: 3px;
 }
 
+div.search-form .home-button:hover {
+  background-color: #3b8de0;
+  color: #eff156;
+  border: 1px solid #3b8de0;
+}
+
 div.search-form .my-search-form-tag {
   background: #ffffff;
   height: 100%;
+  position: relative;
   margin: auto 7px;
   border: 1px solid #4058e0;
   outline: none;
@@ -36,7 +43,7 @@ div.search-form .my-search-form-tag {
 div.search-form .my-search-form-tag .tag-search {
   background: #4058e0;
   background: #ffffff;
-  font-size: 16px;
+  font-size: 18px;
   width: 325px;
   padding: 0 20px;
   border: none;
@@ -52,7 +59,14 @@ div.search-form .my-search-form-tag .search-button {
   color: #ffffff;
 }
 
+div.search-form .my-search-form-tag .search-button:hover {
+  background-color: #3b8de0;
+  color: #eff156;
+  border: 1px solid #3b8de0;
+}
+
 div.search-form .random-button {
+  width: 80px;
   height: 100%;
   border: 0px;
   background: #4058e0;
@@ -61,31 +75,28 @@ div.search-form .random-button {
   border-radius: 3px;
 }
 
+div.search-form .random-button:hover {
+  background-color: #3b8de0;
+  color: #eff156;
+  border: 1px solid #3b8de0;
+}
+
 .hangout-list {
-  margin-top: 40px;
-  margin: 0 auto;
-  padding: 0px;
+  height: 100%;
 }
 
 .hangout-list .hangout-list-wrap {
-  margin: 0 auto;
-  padding: 0px;
+  margin-top: 10px;
 }
 
 .hangout-list .hangout-list-wrap .hangout-list-nav {
+  margin-top: 10px;
+  margin-left: 180px;
+  margin-right: 180px;
+  padding: 5px;
   list-style: none;
-  margin: 0 auto;
-  padding: 0px;
-  max-width: 450px;
-  width: 100%;
-}
-
-.hangout-list .hangout-list-wrap .hangout-list-nav #go-center-button {
-  width: 50px;
-  border: 0px;
-  background: #4058e0;
-  outline: none;
-  float: left;
-  color: #ffffff;
+  text-align: center;
+  border-top: 1px solid black;
+  font-size: 18px;
 }
 /*# sourceMappingURL=base.css.map */
