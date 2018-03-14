@@ -157,10 +157,10 @@
 
     // 주어진 태그로 검색을 실시하고 목록을 업데이트한다
     // 만약 태그가 주어지지 않는다면 디폴트 검색을 실시한다
-    function searchTagAndUpdate(tags='', area='') {
+    function searchTagAndUpdate(area='all', tags='') {
         var url = '{% url 'search' %}';
 
-        if (area.length > 0) {
+        if (area != "all") {
             url += area + "/";
         }
 
@@ -183,14 +183,28 @@
                     document.getElementById("list-empty-msg-tag").setAttribute('hidden', 'hidden');
                 }
 
+                var bounds = new daum.maps.LatLngBounds();
+
                 $.each(result, function(i, data){
                     hangout = hangoutContainer.register(data);
                     hangout.show();
+                    bounds.extend(hangout.latlng);
                 });
+
+                map.setBounds(bounds);
+
             } else {
                 alert('load failed:' + status);
             }
         });
+    }
+
+    function calcArraySum(arr) {
+        return arr.reduce(function(a, b) { return a + b; });
+    }
+
+    function calcArrayAverage(arr) {
+        return calcArraySum(arr) / arr.length;
     }
 
     $(document).ready(function(){
@@ -207,17 +221,17 @@
                 return false;
             }
 
-            searchTagAndUpdate(tags, area);
+            searchTagAndUpdate(area, tags);
         });
     });
 
 </script>
 
 <div class="search-form">
-    <button class="home-button" onclick="searchTagAndUpdate();" >HOME</button>
+    <button class="home-button" onclick="searchTagAndUpdate();">HOME</button>
     <form method="post" class="my-search-form-tag" id="my-search-form">{% csrf_token %}
         <select id="area-search">
-            <option value="">---------</option>
+            <option value="all">전체</option>
             {% for area in area_list %}
             <option value="{{ area.name }}">{{ area.name }}</option>
             {% endfor %}
