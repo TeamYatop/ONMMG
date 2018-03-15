@@ -26,7 +26,10 @@ def hangout_detail(request, slug):
 @api_view()
 def hangout_search_by_tags(request, words):
     tags = convert_words_to_tags(words)
-    queryset = filter_hangout_with_tags(tags)
+    if tags:
+        queryset = filter_hangout_with_tags(tags)
+    else:
+        queryset = Hangout.objects.none()
 
     serializer = HangoutSerializer(queryset, many=True)
     return JsonResponse(serializer.data, status=201, safe=False)
