@@ -143,6 +143,9 @@
 
     function makeChangeCenterAction(map, latlng) {
         return function() {
+            var bounds = new daum.maps.LatLngBounds();
+            bounds.extend(latlng);
+            map.setBounds(bounds);
             map.setCenter(latlng);
         };
     }
