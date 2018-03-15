@@ -1,94 +1,75 @@
 from django.http import HttpResponse, JsonResponse
-from rest_framework.parsers import JSONParser
+from rest_framework.decorators import api_view
 
 from hangout.models import Hangout, Tag, Area
 from hangout.serializers import HangoutSerializer
 
 
+@api_view()
 def hangout_list(request):
-    if request.method == 'GET':
-        hangouts = Hangout.objects.all()
-        serializer = HangoutSerializer(hangouts, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = HangoutSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+    hangouts = Hangout.objects.all()
+    serializer = HangoutSerializer(hangouts, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 
+@api_view()
 def hangout_detail(request, slug):
     try:
         hangout = Hangout.objects.get(slug=slug)
     except Hangout.DoesNotExist:
         return HttpResponse(status=404)
-
-    if request.method == 'GET':
+    else:
         serializer = HangoutSerializer(hangout)
         return JsonResponse(serializer.data)
 
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = HangoutSerializer(hangout, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
 
-    elif request.method == 'DELETE':
-        hangout.delete()
-        return HttpResponse(status=204)
-
-
+@api_view()
 def hangout_search_by_tags(request, words):
-    words = words.split(',')
-    tags = list()
-    for w in words:
-        try:
-            tag = Tag.objects.get(word=w)
-        except Tag.DoesNotExist:
-            pass
-        else:
-            tags.append(tag)
-
-    if tags:
-        queryset = Hangout.objects.all()
-        for tag in tags:
-            queryset = queryset.filter(tags__in=[tag])
-    else:
-        queryset = Hangout.objects.none()
+    tags = convert_words_to_tags(words)
+    queryset = filter_hangout_with_tags(tags)
 
     serializer = HangoutSerializer(queryset, many=True)
     return JsonResponse(serializer.data, status=201, safe=False)
 
 
-def hangout_search_by_area_n_tags(request, area, words):
+@api_view()
+def hangout_search_by_area_n_tags(request, area_name, words):
+    area_related_tags = convert_area_name_to_tags(area_name)
+    queryset = filter_hangout_with_area_related_tags(area_related_tags)
+
+    tags = convert_words_to_tags(words)
+    queryset = filter_hangout_with_tags(tags, queryset=queryset)
+
+    serializer = HangoutSerializer(queryset, many=True)
+    return JsonResponse(serializer.data, status=201, safe=False)
+
+
+def convert_area_name_to_tags(area_name):
     try:
-        area = Area.objects.get(name=area)
+        area = Area.objects.get(name=area_name)
     except Area.DoesNotExist:
-        return Hangout.objects.none()
+        return Tag.objects.none()
     else:
-        area_tags = area.tag_set.all()
+        return area.tag_set.all()
 
-    queryset = Hangout.objects.filter(tags__in=list(area_tags))
 
-    tags = list()
-    for word in words.split(','):
-        try:
-            tag = Tag.objects.get(word=word)
-        except Tag.DoesNotExist:
-            pass
-        else:
-            tags.append(tag)
+def convert_words_to_tags(words):
+    words = words.split(',')
+    return Tag.objects.filter(word__in=[*words])
 
-    if tags:
-        for tag in tags:
-            queryset = queryset.filter(tags__in=[tag])
-    else:
-        queryset = Hangout.objects.none()
 
-    serializer = HangoutSerializer(queryset, many=True)
-    return JsonResponse(serializer.data, status=201, safe=False)
+def filter_hangout_with_area_related_tags(area_related_tags, *, queryset=None):
+    queryset = Hangout.objects.all() if queryset is None else queryset
+
+    queryset = queryset.filter(tags__in=list(area_related_tags))
+
+    return queryset
+
+
+def filter_hangout_with_tags(tags, *, queryset=None):
+    queryset = Hangout.objects.all() if queryset is None else queryset
+
+    for tag in tags:
+        queryset = queryset.filter(tags__in=[tag])
+
+    return queryset
