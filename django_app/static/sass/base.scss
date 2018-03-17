@@ -39,10 +39,14 @@ div.search-form {
         border: 1px solid #4058e0;
         outline: none;
         border-radius: 3px;
-        
+        .area-search{
+            background: #4058e0;
+            height: 100%;
+            color: #ffffff;
+
+        }
         
         .tag-search {
-            background: #4058e0;
             background: #ffffff;
             font-size: 18px;
             width: 325px;
@@ -87,26 +91,28 @@ div.search-form {
 }
 
 .hangout-list {
-    height: 100%;
+    float: left;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+
     .hangout-list-wrap {
         margin-top: 10px;
+        list-style: none;
+        
         .hangout-list-nav {
             margin-top: 10px;
             margin-left: 180px;
             margin-right: 180px;
             padding: 5px;
             list-style: none;
-            text-align: center;
             border-top: 1px solid black;
             font-size: 18px;
-            // #go-center-button {
-            //     width: 50px;
-            //     border: 0px;
-            //     background: #4058e0;
-            //     outline: none;
-            //     float: left;
-            //     color: #ffffff
-            // }
+            display: inline-block;
+        }
+        .hangout-list-nav-descript {
+            list-style: none;
+            text-align: center;
         }
     }
 
