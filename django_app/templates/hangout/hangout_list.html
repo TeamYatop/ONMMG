@@ -1,0 +1,280 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<div id="map" style="width:100%;height:350px;"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d6c98772c22da8e2f99772ad89a32b40"></script>
+<script type=text/javascript>
+    // 지도를 생성합니다
+    var center_lat = 37.41132;
+    var center_lng = 127.12866099999997;
+    var start_level = 5;
+
+    var mapContainer = document.getElementById('map');
+    var mapOption = {
+        center: new daum.maps.LatLng(center_lat, center_lng),
+        level: start_level
+    };
+
+    var map = new daum.maps.Map(mapContainer, mapOption);
+
+
+    var hangoutContainer = new HangoutContainer(map);
+
+
+    function HangoutContainer(_map) {
+        this.map = _map;
+        this.hangouts = {};
+
+        this.register = function(data) {
+            slug = data.slug;
+            // Hangout의 slug가 이미 등록되어 있는지 확인하고 없다면 새로 생성해서 등록한다.
+            if (!(slug in this.hangouts)) {
+                hangout = new Hangout(this.map, data);
+                this.hangouts[slug] = hangout;
+
+                // todo : 이벤트 등록을 여기서 해도 될지 고민할 필요가 있다.
+                // 지도에 이벤트 등록
+                daum.maps.event.addListener(hangout.marker, 'mouseover', makeOverListener(this.map, hangout.marker, hangout.infoWindow));
+                daum.maps.event.addListener(hangout.marker, 'mouseout', makeOutListener(hangout.infoWindow));
+                daum.maps.event.addListener(hangout.marker, 'click', makeChangeCenterAction(this.map, hangout.latlng));
+                hangout.htmlTag.onclick = makeChangeCenterAction(this.map, hangout.latlng);
+
+                // todo : html 컨테이너에 태그 삽입을 여기서 해도 될지 고민할 필요가 있다.
+                // html 컨테이너에 태그 삽입
+                $("#dynamic-hangout-list-wrap").append(hangout.htmlTag);
+            }
+            return this.hangouts[slug];
+        }
+
+        this.showAll = function() {
+            for (var key in this.hangouts) {
+                this.hangouts[key].show();
+            }
+        }
+
+        this.hideAll = function() {
+            for (var key in this.hangouts) {
+                this.hangouts[key].hide();
+            }
+        }
+
+        this.get = function(key) {
+            return this.hangouts[key];
+        }
+
+        // 선택된 key값을 가지는 Hangout에게 포커스를 맞춘다
+        this.setFocus = function(key) {
+            this.hangouts[key].setCenter();
+            return this.hangouts[key];
+        }
+    }
+
+
+    function Hangout(_map, _hangout) {
+        this.map = _map;
+        this.data = _hangout;
+        this.slug = this.data.slug;
+        this.latlng = new daum.maps.LatLng(this.data.latitude, this.data.longitude);
+        this.marker = createMarker(this.map, this.latlng);
+        this.infoWindow = createInfoWindow(this.data);
+        this.htmlTag = createHTMLTag(this.data);
+        this.isVisible = true;
+
+        this.show = function() {
+            if (!this.isVisible) {
+                this.marker.setMap(this.map);
+                this.htmlTag.removeAttribute('hidden');
+
+                this.isVisible = true;
+            }
+        }
+        this.hide = function() {
+            if (this.isVisible) {
+                this.infoWindow.close();
+                this.marker.setMap(null);
+                this.htmlTag.setAttribute('hidden', 'hidden');
+
+                this.isVisible = false;
+            };
+        }
+        this.setCenter = function() {
+            this.map.setCenter(this.latlng);
+        }
+    }
+
+    function createMarker(map, latlng) {
+        return new daum.maps.Marker({
+            map: map,
+            position: latlng,
+            clickable: true
+        });
+    }
+
+    function createInfoWindow(data) {
+        var content_tag_open = '<div style="padding:5px;">';
+        var content_tag_close = '</div>';
+
+        return new daum.maps.InfoWindow({
+            content: content_tag_open + data.title + content_tag_close
+        });
+    }
+
+    // function createHTMLTag(data) {
+    //     var item = document.createElement("li");
+    //     item.innerHTML = data.title + " " + data.description;
+    //     item.className = "hangout-list-nav";
+    //     return item;
+    // }
+
+    function createHTMLTag(data) {
+        var title = document.createElement("li");
+        var description = document.createElement("li");
+        title.innerHTML = data.title;
+        title.className = 'hangout-list-nav';
+        description.innerHTML = data.description;
+        description.className = 'hangout-list-nav-descript';
+        content_list = document.createElement("ul");
+        content_list.appendChild(title);
+        content_list.appendChild(description);
+        return content_list;
+    }
+
+    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+    function makeOverListener(map, marker, infoWindow) {
+        return function() {
+            infoWindow.open(map, marker);
+        };
+    }
+
+    // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+    function makeOutListener(infoWindow) {
+        return function() {
+            infoWindow.close();
+        };
+    }
+
+    function makeChangeCenterAction(map, latlng) {
+        return function() {
+            var bounds = new daum.maps.LatLngBounds();
+            bounds.extend(latlng);
+            map.setBounds(bounds);
+            map.setCenter(latlng);
+        };
+    }
+
+    function selectRandomAndSetFocus() {
+        var keys = Object.keys(hangoutContainer.hangouts);
+        var visibleKeys = keys.filter(function (key) {return hangoutContainer.get(key).isVisible;});
+        var randomKey = visibleKeys[visibleKeys.length * Math.random() << 0];
+        var hangout = hangoutContainer.setFocus(randomKey);
+        document.getElementById("list-empty-msg-tag").innerHTML = '랜덤선택: ' + hangout.data.title;
+    }
+
+    function createUrlWithParameters(url, params) {
+        url_params = [];
+        for (let p in params) {
+            url_params.push(p + '=' + params[p]);
+        }
+
+        if (url_params.length > 0) {
+            url += "?" + url_params.join('&');
+        }
+
+        return url;
+    }
+
+    function loadDefaultValuesOnStartUp() {
+        var default_area = "야탑";
+        document.getElementById('area-search').value = default_area;
+        searchAndUpdateHangouts(area=default_area,tags='');
+    }
+
+    function searchAndUpdateHangouts(area, tags) {
+        var url = '{% url 'search' %}';
+        var params = {};
+
+        if (area != "all") {
+            params['area'] = area;
+        }
+
+        if (tags.length > 0) {
+            params['tags'] = tags;
+        }
+
+        url = createUrlWithParameters(url, params);
+
+        $.getJSON(url, function(result, status){
+            if (status == "success") {
+                // hangout(marker, info, tag) 숨기기
+                hangoutContainer.hideAll();
+
+                // 검색 결과가 비어있을 브라우저 상에 경우 출력
+                if (Object.keys(result).length == 0) {
+                    tag = document.getElementById("list-empty-msg-tag")
+                    // tag.innerHTML = "'" + error_msg + "' " + "검색 결과가 없습니다";
+                    tag.removeAttribute('hidden');
+                    return false;
+                } else {
+                    document.getElementById("list-empty-msg-tag").setAttribute('hidden', 'hidden');
+                }
+
+                var bounds = new daum.maps.LatLngBounds();
+
+                $.each(result, function(i, data){
+                    hangout = hangoutContainer.register(data);
+                    hangout.show();
+                    bounds.extend(hangout.latlng);
+                });
+
+                map.setBounds(bounds);
+            } else {
+                alert('load failed:' + status);
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        loadDefaultValuesOnStartUp();
+
+        $("#my-search-form").submit(function(e){
+            e.preventDefault();
+
+            var tags = document.getElementById("tags-search").value;
+            var area = document.getElementById("area-search").value;
+
+            if (tags.length <= 0) {
+                alert('search query is empty!!!');
+                return false;
+            }
+
+            searchAndUpdateHangouts(area, tags);
+        });
+    });
+
+</script>
+
+<div class="search-form">
+    <button class="home-button" onclick="location.href='{% url 'home' %}'">HOME</button>
+    <form method="post" class="my-search-form-tag" id="my-search-form">{% csrf_token %}
+        <select id="area-search" class="area-search">
+            <option value="all">전체</option>
+            {% for area in area_list %}
+            <option value="{{ area.name }}">{{ area.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" class="tag-search" id="tags-search">
+        <button type="submit" class="search-button">검색</button>
+    </form>
+    <button class="random-button" onclick="selectRandomAndSetFocus();">RANDOM</button>
+</div>
+
+<div class="hangout-list">
+    <div class="hangout-list-wrap">
+        <p id="list-empty-msg-tag" hidden="hidden">검색 결과가 없습니다</p>
+        <ul id="dynamic-hangout-list-wrap">
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

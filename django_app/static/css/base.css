@@ -1,0 +1,116 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5rem;
+  color: #262626;
+}
+
+div.search-form {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 40px;
+  margin-top: 5px;
+}
+
+div.search-form .home-button {
+  background: #4058e0;
+  outline: none;
+  color: #ffffff;
+  height: 100%;
+  border: 1px solid #4058e0;
+  border-radius: 3px;
+}
+
+div.search-form .home-button:hover {
+  background-color: #3b8de0;
+  color: #eff156;
+  border: 1px solid #3b8de0;
+}
+
+div.search-form .my-search-form-tag {
+  background: #ffffff;
+  height: 100%;
+  position: relative;
+  margin: auto 7px;
+  border: 1px solid #4058e0;
+  outline: none;
+  border-radius: 3px;
+}
+
+div.search-form .my-search-form-tag .area-search {
+  background: #4058e0;
+  height: 100%;
+  color: #ffffff;
+}
+
+div.search-form .my-search-form-tag .tag-search {
+  background: #ffffff;
+  font-size: 18px;
+  width: 325px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 3px;
+}
+
+div.search-form .my-search-form-tag .search-button {
+  width: 50px;
+  height: 100%;
+  border: 0px;
+  background: #4058e0;
+  outline: none;
+  color: #ffffff;
+}
+
+div.search-form .my-search-form-tag .search-button:hover {
+  background-color: #3b8de0;
+  color: #eff156;
+  border: 1px solid #3b8de0;
+}
+
+div.search-form .random-button {
+  width: 80px;
+  height: 100%;
+  border: 0px;
+  background: #4058e0;
+  outline: none;
+  color: #ffffff;
+  border-radius: 3px;
+}
+
+div.search-form .random-button:hover {
+  background-color: #3b8de0;
+  color: #eff156;
+  border: 1px solid #3b8de0;
+}
+
+.hangout-list {
+  float: left;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hangout-list .hangout-list-wrap {
+  margin-top: 10px;
+  list-style: none;
+}
+
+.hangout-list .hangout-list-wrap .hangout-list-nav {
+  margin-top: 10px;
+  margin-left: 180px;
+  margin-right: 180px;
+  padding: 5px;
+  list-style: none;
+  border-top: 1px solid black;
+  font-size: 18px;
+  display: inline-block;
+}
+
+.hangout-list .hangout-list-wrap .hangout-list-nav-descript {
+  list-style: none;
+  text-align: center;
+}
+/*# sourceMappingURL=base.css.map */

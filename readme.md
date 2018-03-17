@@ -15,4 +15,4 @@
 ### 기술스택
 - Python
 - Django
-- PostgreSQL
+- Postgres
