@@ -120,11 +120,24 @@
         });
     }
 
+    // function createHTMLTag(data) {
+    //     var item = document.createElement("li");
+    //     item.innerHTML = data.title + " " + data.description;
+    //     item.className = "hangout-list-nav";
+    //     return item;
+    // }
+
     function createHTMLTag(data) {
-        var item = document.createElement("li");
-        item.innerHTML = data.title + " " + data.description;
-        item.className = "hangout-list-nav";
-        return item;
+        var title = document.createElement("li");
+        var description = document.createElement("li");
+        title.innerHTML = data.title;
+        title.className = 'hangout-list-nav';
+        description.innerHTML = data.description;
+        description.className = 'hangout-list-nav-descript';
+        content_list = document.createElement("ul");
+        content_list.appendChild(title);
+        content_list.appendChild(description);
+        return content_list;
     }
 
     // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
@@ -230,7 +243,7 @@
 <div class="search-form">
     <button class="home-button" onclick="searchTagAndUpdate();">HOME</button>
     <form method="post" class="my-search-form-tag" id="my-search-form">{% csrf_token %}
-        <select id="area-search">
+        <select id="area-search" class="area-search">
             <option value="all">전체</option>
             {% for area in area_list %}
             <option value="{{ area.name }}">{{ area.name }}</option>
@@ -243,9 +256,9 @@
 </div>
 
 <div class="hangout-list">
-    <div id="dynamic-hangout-list-wrap" class="hangout-list-wrap">
-        <ul>
-            <li id="list-empty-msg-tag" class="hangout-list-nav" hidden="hidden">검색 결과가 없습니다</li>
+    <div class="hangout-list-wrap">
+        <p id="list-empty-msg-tag" hidden="hidden">검색 결과가 없습니다</p>
+        <ul id="dynamic-hangout-list-wrap">
         </ul>
     </div>
 </div>
