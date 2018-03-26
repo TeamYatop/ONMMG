@@ -9,7 +9,7 @@ from hangout.models import Hangout, Area
 def request_address_2_coord_conversion(address):
     response = requests.get(
         'https://dapi.kakao.com/v2/local/search/address.json',
-        headers={"Authorization": "KakaoAK a84ee72870c8ac12a6c3aca72a82030f"},
+        headers={"Authorization": "KakaoAK d6c98772c22da8e2f99772ad89a32b40"},
         params={'query': address}
     )
 
