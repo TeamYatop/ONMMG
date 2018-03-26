@@ -6,6 +6,13 @@ html, body {
   color: #262626;
 }
 
+<<<<<<< HEAD
+=======
+ul, li {
+  padding: 0 0 0 0;
+}
+
+>>>>>>> development
 div.search-form {
   display: flex;
   justify-content: center;
@@ -19,6 +26,10 @@ div.search-form .home-button {
   background: #4058e0;
   outline: none;
   color: #ffffff;
+<<<<<<< HEAD
+=======
+  width: 80px;
+>>>>>>> development
   height: 100%;
   border: 1px solid #4058e0;
   border-radius: 3px;
@@ -38,30 +49,64 @@ div.search-form .my-search-form-tag {
   border: 1px solid #4058e0;
   outline: none;
   border-radius: 3px;
+<<<<<<< HEAD
+=======
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+>>>>>>> development
 }
 
 div.search-form .my-search-form-tag .area-search {
   background: #4058e0;
+<<<<<<< HEAD
   height: 100%;
   color: #ffffff;
+=======
+  width: 100px;
+  height: 100%;
+  padding-left: 10px;
+  color: #ffffff;
+  font-size: 13px;
+  padding-bottom: 3px;
+}
+
+div.search-form .my-search-form-tag .area-search:hover {
+  background-color: #3b8de0;
+  color: #eff156;
+  border: 1px solid #3b8de0;
+>>>>>>> development
 }
 
 div.search-form .my-search-form-tag .tag-search {
   background: #ffffff;
   font-size: 18px;
+<<<<<<< HEAD
   width: 325px;
+=======
+  width: 100%;
+>>>>>>> development
   padding: 0 20px;
   border: none;
   border-radius: 3px;
 }
 
 div.search-form .my-search-form-tag .search-button {
+<<<<<<< HEAD
   width: 50px;
+=======
+  width: 100px;
+>>>>>>> development
   height: 100%;
   border: 0px;
   background: #4058e0;
   outline: none;
   color: #ffffff;
+<<<<<<< HEAD
+=======
+  font-size: 13px;
+  padding-bottom: 3px;
+>>>>>>> development
 }
 
 div.search-form .my-search-form-tag .search-button:hover {
@@ -71,7 +116,11 @@ div.search-form .my-search-form-tag .search-button:hover {
 }
 
 div.search-form .random-button {
+<<<<<<< HEAD
   width: 80px;
+=======
+  width: 100px;
+>>>>>>> development
   height: 100%;
   border: 0px;
   background: #4058e0;
