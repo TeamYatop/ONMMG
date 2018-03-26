@@ -6,12 +6,10 @@ html, body {
   line-height: 1.5rem;
   color: #262626;
 }
-<<<<<<< HEAD
-=======
+
 ul, li {
     padding: 0 0 0 0;
 }
->>>>>>> development
 
 div.search-form {
     display: flex;
@@ -21,18 +19,12 @@ div.search-form {
     height: 40px;
     margin-top: 5px;
     
-<<<<<<< HEAD
 
-=======
->>>>>>> development
     .home-button {
         background: #4058e0;
         outline: none;
         color: #ffffff;
-<<<<<<< HEAD
-=======
         width: 80px;
->>>>>>> development
         height: 100%;
         border: 1px solid #4058e0;
         border-radius: 3px;
@@ -52,22 +44,14 @@ div.search-form {
         border: 1px solid #4058e0;
         outline: none;
         border-radius: 3px;
-<<<<<<< HEAD
-        .area-search{
-            background: #4058e0;
-            height: 100%;
-            color: #ffffff;
-=======
-        display: flex;
-        justify-content: space-between;
-        box-sizing: border-box;
 
         .area-search{
             background: #4058e0;
-            width: 100px;
             height: 100%;
-            padding-left: 10px;
             color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            box-sizing: border-box;
             font-size: 13px;
             padding-bottom: 3px;
             
@@ -76,39 +60,26 @@ div.search-form {
                 color: #eff156;
                 border: 1px solid #3b8de0;
             }
->>>>>>> development
-
         }
         
         .tag-search {
             background: #ffffff;
             font-size: 18px;
-<<<<<<< HEAD
-            width: 325px;
-=======
             width: 100%;
->>>>>>> development
             padding: 0 20px;
             border: none;
             border-radius: 3px;
         }
         
         .search-button {
-<<<<<<< HEAD
-            width: 50px;
-=======
             width: 100px;
->>>>>>> development
             height: 100%;
             border: 0px;
             background: #4058e0;
             outline: none;
             color: #ffffff;
-<<<<<<< HEAD
-=======
             font-size: 13px;
             padding-bottom: 3px;
->>>>>>> development
 
             &:hover {
                 background-color: #3b8de0;
@@ -119,11 +90,7 @@ div.search-form {
         }
     }
     .random-button {
-<<<<<<< HEAD
-        width: 80px;
-=======
         width: 100px;
->>>>>>> development
         height: 100%;
         border: 0px;
         background: #4058e0;
@@ -166,5 +133,4 @@ div.search-form {
             text-align: center;
         }
     }
-
 }
