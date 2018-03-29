@@ -44,14 +44,16 @@ div.search-form {
         border: 1px solid #4058e0;
         outline: none;
         border-radius: 3px;
+        display: flex;
+        justify-content: space-between;
+        box-sizing: border-box;
 
         .area-search{
             background: #4058e0;
+            width: 100px;
             height: 100%;
+            padding-left: 10px;
             color: #ffffff;
-            display: flex;
-            justify-content: space-between;
-            box-sizing: border-box;
             font-size: 13px;
             padding-bottom: 3px;
             
