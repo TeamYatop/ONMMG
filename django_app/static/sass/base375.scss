@@ -1,0 +1,36 @@
+@media all and (max-width: 375px) {
+
+    div.search-form {
+
+        .home-button {
+            width: 40px;
+            font-size: 9px;
+            padding-left: 1px;
+            padding-right: 1px;
+        }
+        .my-search-form-tag {
+            width: 60%;
+
+            .area-search {
+                width: 40px;
+                font-size: 10px;
+                padding-left: 1px;
+
+            }
+            .tag-search {
+                padding: 0 10px;
+            }
+            .search-button {
+                width: 30px;
+                font-size: 50%;
+            }
+        }
+        .random-button {
+            width: 50px;
+            font-size: 9px;
+            padding-left: 1px;
+            padding-right: 1px;
+        }
+    }
+
+}
