@@ -37,11 +37,9 @@
                 // 지도에 이벤트 등록
                 daum.maps.event.addListener(hangout.marker, 'mouseover', makeOverListener(this.map, hangout.marker, hangout.infoWindow));
                 daum.maps.event.addListener(hangout.marker, 'mouseout', makeOutListener(hangout.infoWindow));
-                daum.maps.event.addListener(hangout.marker, 'click', makeChangeCenterAction(this.map, hangout.latlng));
-                hangout.htmlTag.onclick = makeChangeCenterAction(this.map, hangout.latlng);
+                daum.maps.event.addListener(hangout.marker, 'click', makeChangeCenterAction(this, slug));
+                this.hangouts[slug].htmlTag.children[0].onclick = makeChangeCenterAction(this, slug);
 
-                // todo : html 컨테이너에 태그 삽입을 여기서 해도 될지 고민할 필요가 있다.
-                // html 컨테이너에 태그 삽입
                 $("#dynamic-hangout-list-wrap").append(hangout.htmlTag);
             }
             return this.hangouts[slug];
@@ -65,8 +63,18 @@
 
         // 선택된 key값을 가지는 Hangout에게 포커스를 맞춘다
         this.setFocus = function(key) {
-            this.hangouts[key].setCenter();
-            return this.hangouts[key];
+            var bounds = new daum.maps.LatLngBounds();
+            for (let h in this.hangouts) {
+                hangout = this.hangouts[h]
+                if (hangout.isVisible) {
+                    bounds.extend(hangout.latlng);
+                    hangout.infoWindow.close();
+                }
+            }
+            center_hangout = this.hangouts[key];
+            this.map.setBounds(bounds);
+            this.map.setCenter(center_hangout.latlng);
+            center_hangout.infoWindow.open(map, center_hangout.marker)
         }
     }
 
@@ -100,6 +108,7 @@
         }
         this.setCenter = function() {
             this.map.setCenter(this.latlng);
+            this.infoWindow.open();
         }
     }
 
@@ -119,13 +128,6 @@
             content: content_tag_open + data.title + content_tag_close
         });
     }
-
-    // function createHTMLTag(data) {
-    //     var item = document.createElement("li");
-    //     item.innerHTML = data.title + " " + data.description;
-    //     item.className = "hangout-list-nav";
-    //     return item;
-    // }
 
     function createHTMLTag(data) {
         var title = document.createElement("li");
@@ -154,13 +156,10 @@
         };
     }
 
-    function makeChangeCenterAction(map, latlng) {
+    function makeChangeCenterAction(container, key) {
         return function() {
-            var bounds = new daum.maps.LatLngBounds();
-            bounds.extend(latlng);
-            map.setBounds(bounds);
-            map.setCenter(latlng);
-        };
+            container.setFocus(key)
+        }
     }
 
     function selectRandomAndSetFocus() {
@@ -168,7 +167,6 @@
         var visibleKeys = keys.filter(function (key) {return hangoutContainer.get(key).isVisible;});
         var randomKey = visibleKeys[visibleKeys.length * Math.random() << 0];
         var hangout = hangoutContainer.setFocus(randomKey);
-        document.getElementById("list-empty-msg-tag").innerHTML = '랜덤선택: ' + hangout.data.title;
     }
 
     function createUrlWithParameters(url, params) {
