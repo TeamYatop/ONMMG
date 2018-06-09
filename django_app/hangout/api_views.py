@@ -2,7 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework.decorators import api_view
 
 from hangout.models import Hangout, Tag, Area
-from hangout.serializers import HangoutSerializer
+from hangout.serializers import HangoutSerializer, AreaSerializer, TagSerializer
 
 
 @api_view()
@@ -36,6 +36,28 @@ def hangout_search(request):
 
     serializer = HangoutSerializer(queryset, many=True)
     return JsonResponse(serializer.data, status=201, safe=False)
+
+
+@api_view()
+def hangout_tags(request):
+    try:
+        tags = Tag.objects.all()
+    except Tag.DoesNotExist:
+        return HttpResponse(status=404)
+    else:
+        serializer = TagSerializer(tags, many=True)
+        return JsonResponse(serializer.data, status=201, safe=False)
+
+
+@api_view()
+def hangout_areas(request):
+    try:
+        areas = Area.objects.all()
+    except Area.DoesNotExist:
+        return HttpResponse(status=404)
+    else:
+        serializer = AreaSerializer(areas, many=True)
+        return JsonResponse(serializer.data, status=201, safe=False)
 
 
 def convert_area_name_to_tags(area_name):

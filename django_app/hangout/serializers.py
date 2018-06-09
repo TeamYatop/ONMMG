@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from hangout.models import Hangout, Tag
+from hangout.models import Hangout, Tag, Area
 
 
 class TagSerializer(serializers.Serializer):
@@ -16,3 +16,11 @@ class HangoutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hangout
         fields = ('slug', 'title', 'description', 'address', 'latitude', 'longitude', 'tags')
+
+
+class AreaSerializer(serializers.ModelSerializer):
+    tag_set = TagSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Area
+        fields = ('name', 'address', 'tag_set')
