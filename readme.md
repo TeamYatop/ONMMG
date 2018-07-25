@@ -30,18 +30,16 @@
 
 ### API
 
-| purpose                  | api                                 | examples                             |
-|--------------------------|-------------------------------------|--------------------------------------|
-| get                      | /api/detail/[slug]                  | /api/detail/vbmwgQtv5BT              |
-| search with area         | /api/search?area=[area]             | /api/search?area=야탑                |
-| search with tags         | /api/search?tags=[tags]             | /api/search?area=튀김,비쌈           |
-| ssearch with area & tags | /api/search?area=[area]&tags=[tags] | /api/search?area=야탑&tags=튀김,비쌈 |
+| api                                       | description    | examples                          |
+|-------------------------------------------|----------------|-----------------------------------|
+| ```/api/detail/<slug>```                  | get hangout    | /api/detail/vbmwgQtv5BT           |
+| ```/api/areas```                          | get all areas  | /api/areas                        |
+| ```/api/tags```                           | get all tags   | /api/tags                         |
+| ```/api/search?area=<area>&tags=<tags>``` | search hangout | /api/search?area=야탑&tags=튀김,비쌈 |
 
-| field | description                  | examples    |
-|-------|------------------------------|-------------|
-| slug  | 숫자와 문자가 포함된 길이 11의 문자열 | vbmwgQtv5BT |
-| area  | 지역 태그                       | 야탑         |
-| tags  | 쉼표로 구분된 태그                | 튀김,비쌈     |
+- ```<slug>``` 숫자와 알파벳(대소문자 구분) 으로 구성된 길이 11의 문자열
+- ```<area>``` 지역을 속성을 같고있는 태그 1개
+- ```<tags>``` 쉼표로 구분된 1개 이상의 태그
 
 ### 모델
 
